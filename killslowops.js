@@ -7,6 +7,7 @@ killLongRunningOps = function(maxSecsRunning) {
     currOp = db.currentOp();
     for (oper in currOp.inprog) {
         op = currOp.inprog[oper-0];
+        // op.op == "command"  if you're sure what you are doing exactly 
         if (op.secs_running > maxSecsRunning && op.op == "query" && !op.ns.startsWith("local")) {
             print("Killing opId: " + op.opid
                     + " running for over secs: "
